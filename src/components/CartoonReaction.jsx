@@ -3,21 +3,21 @@ import { useState, useEffect, useRef } from "react";
 
 export default function CartoonReaction() {
   const [imgSrc, setImgSrc] = useState("./img/neutral.jpg");
-  const [rejectText, setRejectText] = useState("拒绝");
+  const [rejectText, setRejectText] = useState("残忍say NO");
   const [agreeSize, setAgreeSize] = useState(16);
   const [rejectSize, setRejectSize] = useState(1); // 用于拒绝按钮的缩放
   const buttonRef = useRef(null); 
   
   const handleReject = () => {
-    if (rejectText === "拒绝") {
-      setRejectText("要不，再想想？（期待）");
+    if (rejectText === "残忍say NO") {
+      setRejectText("嗯嗯嗯？（期待");
       setAgreeSize(20);
       setRejectSize(0.9); // 减小拒绝按钮
-    } else if (rejectText === "要不，再想想？（期待）") {
-      setRejectText("你你你不爱我了吗？（委屈）");
+    } else if (rejectText === "嗯嗯嗯？（期待") {
+      setRejectText("你你你不爱我了吗？（委屈");
       setAgreeSize(30);
       setRejectSize(0.8);
-    } else if (rejectText === "你你你不爱我了吗？（委屈）") {
+    } else if (rejectText === "你你你不爱我了吗？（委屈") {
       setRejectText("不，你是爱我的❤️");
       setAgreeSize(40);
       setRejectSize(0.7);
@@ -30,7 +30,7 @@ export default function CartoonReaction() {
       setAgreeSize(60);
       setRejectSize(0.5);
     } else if (rejectText === "让另一个选项更大一些啦～") {
-      setRejectText("好吧...😢（才怪）");
+      setRejectText("好吧...😢（才怪");
       setAgreeSize(70);
       setRejectSize(0.4);
     } else {
@@ -119,7 +119,7 @@ export default function CartoonReaction() {
           }}
           onClick={() => setImgSrc("./img/happy.png")}
         >
-          同意
+          来啦！！！
         </button>
         <button 
           ref={buttonRef} 
