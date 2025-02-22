@@ -10,6 +10,22 @@ export default function CartoonReaction() {
   // setImgSrc 是 修改 imgSrc 的函数，当调用它时，React 会重新渲染组件，更新图片。
   // 比如之后setImgSrc("happy.jpg"); // 会把图片改成 "happy.jpg"
   const [imgSrc, setImgSrc] = useState("neutral.jpg");
+  const [rejectText, setRejectText] = useState("拒绝");
+  const [agreeSize, setAgreeSize] = useState(16); // 以 px 为单位存储按钮大小
+  
+  const handleReject = () => {
+    if (rejectText === "拒绝") {
+      setRejectText("再想想");
+      setAgreeSize(18); // 增大字体大小
+    } else if (rejectText === "再想想") {
+      setRejectText("你认真的吗");
+      setAgreeSize(20);
+    } else {
+      setRejectText("好吧...😢");
+      setAgreeSize(22);
+    }
+  };
+  //console.log("当前图片:", imgSrc);
 
   return (
     // 这个 <div> 是页面的主容器。
@@ -37,13 +53,18 @@ export default function CartoonReaction() {
       px-6 py-3 → 内边距，让按钮更大更好看。
       rounded-lg → 圆角，让按钮看起来更圆滑。
       text-lg → 字体大小变大，更易读。 */}
-        <button className="bg-green-500 text-white px-6 py-3 rounded-lg text-lg">
+        <button 
+          className="bg-green-500 text-white rounded-lg px-6 py-3"
+          style={{ fontSize: `${agreeSize}px`, padding: `${agreeSize / 3}px ${agreeSize / 2}px` }} // 用 style 控制字体和内边距
+          onClick={() => setImgSrc("happy.jpg")}
+        >
           同意
         </button>
         {/* “拒绝” 按钮
         颜色是红色 (bg-red-500) */}
-        <button className="bg-red-500 text-white px-6 py-3 rounded-lg text-lg">
-          拒绝
+        <button className="bg-red-500 text-white px-6 py-3 rounded-lg text-lg"
+        onClick={handleReject}>
+          {rejectText}
         </button>
       </div>
     </div>
