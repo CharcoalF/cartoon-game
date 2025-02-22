@@ -88,6 +88,20 @@ export default function CartoonReaction() {
       padding: 0, 
       overflow: "hidden" // 确保没有溢出
     }}> 
+      {/* 标题部分 */}
+      <div style={{ textAlign: "center", margin: "16px 0", fontSize: "24px" }}>
+        <span style={{ color: "yellow" }}>来</span>
+        <span style={{ color: "purple" }}>听</span>
+        <span style={{ color: "red" }}>歌</span>
+        <span style={{ color: "yellow" }}>啊</span>
+        <span style={{ color: "purple" }}>！</span>
+        <span style={{ color: "red" }}>歌</span>
+        <span style={{ color: "yellow" }}>不</span>
+        <span style={{ color: "purple" }}>听</span>
+        <span style={{ color: "red" }}>嘛</span>
+        <span style={{ color: "yellow" }}>？</span>
+      </div>
+
       {/* 背景图片 */}
       <div 
         style={{
@@ -146,4 +160,3 @@ export default function CartoonReaction() {
     </div>
   );
 }
-
