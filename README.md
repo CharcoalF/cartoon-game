@@ -1,3 +1,14 @@
+# Setup Instructions
+
+```
+npx create-vite cartoon-game --template react
+cd cartoon-game
+npm install
+npm install framer-motion
+npm install @shadcn/ui
+npm run dev
+```
+
 # React + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
