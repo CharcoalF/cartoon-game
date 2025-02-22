@@ -1,0 +1,34 @@
+/* CartoonReaction.css */
+
+body {
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* 大屏幕设备样式 */
+  @media (min-width: 768px) {
+    .background {
+      background-image: url('./img/background-large.jpg'); /* 大屏幕背景图 */
+    }
+  }
+  
+  /* 手机设备样式 */
+  @media (max-width: 767px) {
+    .background {
+      background-image: url('./img/background-small.jpg'); /* 手机背景图 */
+    }
+  }
+  
+  /* 通用背景样式 */
+  .background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-size: cover;
+    background-position: center;
+    filter: blur(8px);
+    z-index: -1;
+  }
+  

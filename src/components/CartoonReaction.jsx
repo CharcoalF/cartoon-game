@@ -97,29 +97,32 @@ export default function CartoonReaction() {
           right: 0,
           bottom: 0,
           backgroundImage: 'url("./img/background.jpg")', // 确保路径正确
-          backgroundSize: "cover",
+          backgroundSize: "cover", // 让背景图片覆盖整个屏幕
           backgroundPosition: "center",
-          opacity: 0.3,
+          opacity: 0.6,
           filter: "blur(8px)",
           zIndex: -1,
         }} 
       />
       
       {/* 固定图片的宽高，确保每个图片都相同 */}
-      <img src={imgSrc} alt="character" className="mb-6" style={{ width: "256px", height: "256px" }} />
+      <img src={imgSrc} alt="character" style={{ width: "400px", height: "400px", zIndex: 1, position: "relative" }} />
       
-      <div style={{ marginTop: "16px", display: "flex", gap: "16px" }}>
+      <div style={{ marginTop: "16px", display: "flex", flexDirection: "column", alignItems: "center", gap: "16px" }}>
         <button 
           style={{
             backgroundColor: "#48bb78",
             color: "white",
             borderRadius: "0.5rem",
-            padding: "0.5rem 1.5rem",
+            padding: "0.5rem 1.5rem", // 增加内边距
             fontSize: `${agreeSize}px`,
+            width: "100%", // 按钮宽度适应
+            maxWidth: "200px", // 最大宽度限制
+            minWidth: "150px", // 添加最小宽度
           }}
           onClick={() => setImgSrc("./img/happy.png")}
         >
-          来啦！！！
+          来啦！
         </button>
         <button 
           ref={buttonRef} 
@@ -127,10 +130,13 @@ export default function CartoonReaction() {
             backgroundColor: "#f56565",
             color: "white",
             borderRadius: "0.5rem",
-            padding: "0.5rem 1.5rem",
+            padding: "0.5rem 1.5rem", // 增加内边距
             fontSize: `${rejectSize * 20}px`, // 拒绝按钮字体大小
             transform: `scale(${rejectSize})`, // 根据大小缩放按钮
-            transition: "transform 0.2s ease-in-out" // 增加缩放动画效果
+            transition: "transform 0.2s ease-in-out", // 增加缩放动画效果
+            width: "100%", // 按钮宽度适应
+            maxWidth: "200px", // 最大宽度限制
+            minWidth: "150px", // 添加最小宽度
           }}
           onClick={handleReject}
         >
@@ -140,3 +146,4 @@ export default function CartoonReaction() {
     </div>
   );
 }
+
