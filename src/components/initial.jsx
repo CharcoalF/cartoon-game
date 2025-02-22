@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import "../styles.css"; // 确保引入样式
 
 export default function CartoonReaction() {
@@ -11,9 +11,6 @@ export default function CartoonReaction() {
   const [rejectPosition, setRejectPosition] = useState({ top: "60%", left: "50%" });
   const [guess, setGuess] = useState("");
   const [feedbackList, setFeedbackList] = useState([]);
-  const [rejectTimeout, setRejectTimeout] = useState(null);
-  const [isRejectButtonVisible, setIsRejectButtonVisible] = useState(true);
-  const [countdown, setCountdown] = useState(5); // 倒计时状态
 
   const handleMouseMove = (event) => {
     const centerX = window.innerWidth / 2;
@@ -35,30 +32,8 @@ export default function CartoonReaction() {
   }, []);
 
   const handleReject = () => {
-    if (rejectTimeout) {
-      clearTimeout(rejectTimeout);
-    }
-
-    // 设置倒计时
-    setCountdown(5);
-    const timeout = setTimeout(() => {
-      setIsRejectButtonVisible(false);
-    }, 5000);
-    setRejectTimeout(timeout);
-
-    const countdownInterval = setInterval(() => {
-      setCountdown((prev) => {
-        if (prev <= 1) {
-          clearInterval(countdownInterval);
-          return 0;
-        }
-        return prev - 1;
-      });
-    }, 1000);
-
     setRejectSize(prevSize => Math.max(0.3, prevSize - 0.1));
-
-    // 处理拒绝文本和大小变化
+    
     if (rejectText === "残忍say NO") {
       setRejectText("嗯嗯嗯？（期待");
       setAgreeSize(20);
@@ -89,7 +64,6 @@ export default function CartoonReaction() {
       setComeButtonSize(prevSize => prevSize + 4);
     }
 
-    // 更新拒绝按钮位置
     setRejectPosition({
       top: `${Math.random() * 80 + 10}%`,
       left: `${Math.random() * 80 + 10}%`
@@ -112,23 +86,7 @@ export default function CartoonReaction() {
   };
 
   return (
-    <div style={{ position: "relative", minHeight: "100vh", overflow: "hidden", padding: "20px" }}>
-      <div 
-        style={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          backgroundImage: 'url("/img/background.jpg")',
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          opacity: 0.6,
-          filter: "blur(4px)",
-          zIndex: -1,
-        }} 
-      />
-
+    <div style={{ position: "relative", minHeight: "100vh", overflow: "hidden" }}>
       <h1 style={{ textAlign: "center", fontSize: "36px", fontWeight: "bold", color: "#ff69b4" }}>
         来听歌啊，歌不听吗？🎵
       </h1>
@@ -138,61 +96,29 @@ export default function CartoonReaction() {
       </div>
 
       <div style={{ display: "flex", flexDirection: "column", alignItems: "center", marginTop: "20px" }}>
-        <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-          <button 
-            style={{ backgroundColor: "#48bb78", color: "white", borderRadius: "8px", fontSize: `${comeButtonSize}px`, padding: "10px 20px", marginRight: "10px" }}
-            onClick={() => setImgSrc("/img/happy.png")}
-          >
-            来啦
-          </button>
-
-          {isRejectButtonVisible && (
-            <button 
-              style={{ backgroundColor: "#f56565", color: "white", borderRadius: "8px", fontSize: `${rejectSize * 20}px`, transition: "all 0.3s ease-in-out", padding: "10px 20px", position: "absolute", top: rejectPosition.top, left: rejectPosition.left }}
-              onClick={handleReject}
-            >
-              {rejectText} ({countdown})
-            </button>
-          )}
-        </div>
-      </div>
-
-      <div style={{ textAlign: "center", marginTop: "20px" }}>
-        <input 
-          type="text" 
-          value={guess} 
-          onChange={handleGuessChange} 
-          placeholder="输入你的答案..." 
-          style={{ padding: "10px", borderRadius: "5px", border: "1px solid #ccc", width: "300px" }} 
-        />
         <button 
-          onClick={handleGuessSubmit} 
-          style={{ marginLeft: "10px", backgroundColor: "#48bb78", color: "white", borderRadius: "5px", padding: "10px 20px" }}
+          style={{ backgroundColor: "#48bb78", color: "white", borderRadius: "8px", fontSize: `${comeButtonSize}px` }}
+          onClick={() => setImgSrc("/img/happy.png")}
+        >来啦</button>
+
+        <button 
+          style={{ position: "absolute", top: rejectPosition.top, left: rejectPosition.left, backgroundColor: "#f56565", color: "white", borderRadius: "8px", fontSize: `${rejectSize * 20}px`, transition: "all 0.3s ease-in-out" }}
+          onClick={handleReject}
         >
-          提交
+          {rejectText}
         </button>
       </div>
 
-      <ul style={{ textAlign: "center", marginTop: "20px", listStyleType: "none", padding: 0 }}>
+      <div style={{ textAlign: "center", marginTop: "20px" }}>
+        <input type="text" value={guess} onChange={handleGuessChange} placeholder="输入你的答案..." />
+        <button onClick={handleGuessSubmit}>提交</button>
+      </div>
+
+      <ul style={{ textAlign: "center", marginTop: "20px" }}>
         {feedbackList.map((item, index) => (
-          <li key={index} style={{ margin: "5px 0", fontSize: "18px", color: "#333" }}>{item}</li>
+          <li key={index}>{item}</li>
         ))}
       </ul>
-
-      {showGift && (
-        <div style={{ position: "fixed", top: "-100px", left: "50%", transform: "translateX(-50%)", animation: "fall 3s linear forwards" }}>
-          <span style={{ fontSize: "100px", color: "gold" }}>🎁</span>
-        </div>
-      )}
-
-      <style>
-        {`
-          @keyframes fall {
-            0% { top: -100px; opacity: 1; }
-            100% { top: 100vh; opacity: 0; }
-          }
-        `}
-      </style>
     </div>
   );
 }
