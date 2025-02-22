@@ -9,7 +9,7 @@ export default function CartoonReaction() {
   // 创建状态变量 imgSrc的初始值是 "neutral.jpg"（默认图片）。
   // setImgSrc 是 修改 imgSrc 的函数，当调用它时，React 会重新渲染组件，更新图片。
   // 比如之后setImgSrc("happy.jpg"); // 会把图片改成 "happy.jpg"
-  const [imgSrc, setImgSrc] = useState("neutral.jpg");
+  const [imgSrc, setImgSrc] = useState("./img/neutral.png");
   const [rejectText, setRejectText] = useState("拒绝");
   const [agreeSize, setAgreeSize] = useState(16); // 以 px 为单位存储按钮大小
   const buttonRef = useRef(null); // 用于引用拒绝按钮
@@ -48,9 +48,9 @@ export default function CartoonReaction() {
       const normalizedDistance = Math.min(distance / maxDistance, 1);
 
       if (normalizedDistance < 1) {
-        setImgSrc(normalizedDistance < 0.5 ? "happy.jpg" : "scared.jpg");
+        setImgSrc(normalizedDistance < 0.5 ? "./img/happy.png" : "./img/sad.png");
       } else {
-        setImgSrc("neutral.jpg");
+        setImgSrc("./img/neutral.png");
       }
     }
   };
@@ -95,7 +95,7 @@ export default function CartoonReaction() {
         <button 
           className="bg-green-500 text-white rounded-lg px-6 py-3"
           style={{ fontSize: `${agreeSize}px`, padding: `${agreeSize / 3}px ${agreeSize / 2}px` }} // 用 style 控制字体和内边距
-          onClick={() => setImgSrc("happy.jpg")}
+          onClick={() => setImgSrc("./img/happy.png")}
         >
           同意
         </button>
