@@ -8,7 +8,6 @@ export default function CartoonReaction() {
   const buttonRef = useRef(null); 
   
   const handleReject = () => {
-    // 拒绝按钮的逻辑，保持不变
     if (rejectText === "拒绝") {
       setRejectText("要不，再想想？（期待）");
       setAgreeSize(20);
@@ -75,17 +74,17 @@ export default function CartoonReaction() {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100"> 
-      {/* 显示人物图片并使其在按钮正上方 */}
-      <img src={imgSrc} alt="character" className="w-32 h-32 mb-6" /> {/* 增加下边距 */}
-      <div className="mt-2 flex space-x-4"> {/* 让按钮之间有一定的间距 */}
+      {/* 固定图片的宽高,确保每个图片都相同 */}
+      <img src={imgSrc} alt="character" className="w-32 h-32 mb-6" style={{ width: "256px", height: "256px" }} />
+      <div className="mt-2 flex space-x-4">
         <button 
-          className="bg-green-500 text-white rounded-lg px-6 py-3"
+          className="bg-green-500 text-white rounded-lg px-6 py-3 text-lg"
           style={{ fontSize: `${agreeSize}px`, padding: `${agreeSize / 3}px ${agreeSize / 2}px` }} 
           onClick={() => setImgSrc("./img/happy.png")}
         >
           同意
         </button>
-        <button ref={buttonRef} className="bg-red-500 text-white px-6 py-3 rounded-lg text-lg"
+        <button ref={buttonRef} className="bg-red-500 text-white rounded-lg px-6 py-3 text-lg" 
           onClick={handleReject}>
           {rejectText}
         </button>
