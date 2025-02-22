@@ -1,4 +1,3 @@
-// 导入useState和useEffect, useRef
 import { useState, useEffect, useRef } from "react"; 
 import "../styles.css"; // 确保引入样式，向上一级引入
 
@@ -7,35 +6,70 @@ export default function CartoonReaction() {
   const [rejectText, setRejectText] = useState("残忍say NO");
   const [agreeSize, setAgreeSize] = useState(16);
   const [rejectSize, setRejectSize] = useState(1); // 用于拒绝按钮的缩放
+  const [countdown, setCountdown] = useState(null); // 倒计时
+  const [showRejectButton, setShowRejectButton] = useState(true); // 控制拒绝按钮的显示
+  const [comeButtonSize, setComeButtonSize] = useState(16); // 用于“来啦”按钮的大小
   const buttonRef = useRef(null); 
 
   const handleReject = () => {
     // 每次点击拒绝按钮，缩小按钮
     setRejectSize(prevSize => Math.max(0.3, prevSize - 0.1)); // 确保不小于0.3
 
+    // 更新拒绝文本
     if (rejectText === "残忍say NO") {
       setRejectText("嗯嗯嗯？（期待");
       setAgreeSize(20);
+      setComeButtonSize(prevSize => prevSize + 10); // 增加“来啦”按钮的大小
     } else if (rejectText === "嗯嗯嗯？（期待") {
       setRejectText("你你你不爱我了吗？（委屈");
       setAgreeSize(30);
+      setComeButtonSize(prevSize => prevSize + 10);
     } else if (rejectText === "你你你不爱我了吗？（委屈") {
       setRejectText("不，你是爱我的❤️");
       setAgreeSize(40);
+      setComeButtonSize(prevSize => prevSize + 10);
     } else if (rejectText === "不，你是爱我的❤️") {
       setRejectText("既然这样。。。是时候。。。");
       setAgreeSize(50);
+      setComeButtonSize(prevSize => prevSize + 10);
     } else if (rejectText === "既然这样。。。是时候。。。") {
       setRejectText("让另一个选项更大一些啦～");
       setAgreeSize(60);
+      setComeButtonSize(prevSize => prevSize + 10);
     } else if (rejectText === "让另一个选项更大一些啦～") {
       setRejectText("好吧...😢（才怪");
       setAgreeSize(70);
+      setComeButtonSize(prevSize => prevSize + 10);
     } else {
       setRejectText("（哭得超大声！！！");
       setAgreeSize(80);
+      setComeButtonSize(prevSize => prevSize + 10);
     }
+
+    // 开始倒计时
+    setCountdown(5); // 倒计时5秒
+    setShowRejectButton(true); // 显示拒绝按钮
   };
+
+  useEffect(() => {
+    if (countdown === null) return; // 如果没有倒计时，返回
+    if (countdown === 0) {
+      // 倒计时结束时的处理
+      setRejectText("残忍say NO"); // 重新设置拒绝文本
+      setAgreeSize(16); // 重置同意按钮的大小
+      setRejectSize(1); // 重置拒绝按钮的大小
+      setCountdown(null); // 重置倒计时
+      setShowRejectButton(false); // 移除拒绝按钮
+      setComeButtonSize(40); // “来啦”按钮变大
+      return; 
+    }
+    
+    const timer = setInterval(() => {
+      setCountdown(prev => prev - 1); // 每秒减少倒计时
+    }, 1000);
+    
+    return () => clearInterval(timer); // 清理定时器
+  }, [countdown]);
 
   const handleMouseMove = (event) => {
     const centerX = window.innerWidth / 2;
@@ -119,7 +153,7 @@ export default function CartoonReaction() {
             color: "white",
             borderRadius: "0.5rem",
             padding: "0.5rem 1.5rem", // 增加内边距
-            fontSize: `${agreeSize}px`,
+            fontSize: `${comeButtonSize}px`, // 控制“来啦”按钮大小
             width: "100%", // 按钮宽度适应
             maxWidth: "200px", // 最大宽度限制
             minWidth: "150px", // 添加最小宽度
@@ -128,27 +162,32 @@ export default function CartoonReaction() {
         >
           来啦
         </button>
-        <button 
-          ref={buttonRef} 
-          className="shake" // 添加抖动的类
-          style={{
-            backgroundColor: "#f56565",
-            color: "white",
-            borderRadius: "0.5rem",
-            padding: "0.5rem 1.5rem", // 增加内边距
-            fontSize: `${rejectSize * 20}px`, // 拒绝按钮字体大小
-            transition: "transform 0.2s ease-in-out", // 增加缩放动画效果
-            width: "100%", // 按钮宽度适应
-            maxWidth: "200px", // 最大宽度限制
-            minWidth: "150px", // 添加最小宽度
-          }}
-          onMouseEnter={() => buttonRef.current.classList.add("shake-active")}
-          onMouseLeave={() => buttonRef.current.classList.remove("shake-active")}
-          onClick={handleReject}
-        >
-          {rejectText}
-        </button>
+
+        {/* 仅在 showRejectButton 为 true 时显示拒绝按钮 */}
+        {showRejectButton && (
+          <button 
+            ref={buttonRef} 
+            className="shake" // 添加抖动的类
+            style={{
+              backgroundColor: "#f56565",
+              color: "white",
+              borderRadius: "0.5rem",
+              padding: "0.5rem 1.5rem", // 增加内边距
+              fontSize: `${rejectSize * 20}px`, // 拒绝按钮字体大小
+              transition: "transform 0.2s ease-in-out", // 增加缩放动画效果
+              width: "100%", // 按钮宽度适应
+              maxWidth: "200px", // 最大宽度限制
+              minWidth: "150px", // 添加最小宽度
+            }}
+            onMouseEnter={() => buttonRef.current.classList.add("shake-active")}
+            onMouseLeave={() => buttonRef.current.classList.remove("shake-active")}
+            onClick={handleReject}
+          >
+            {rejectText} {countdown !== null ? `(${countdown})` : ''}
+          </button>
+        )}
       </div>
     </div>
   );
 }
+
