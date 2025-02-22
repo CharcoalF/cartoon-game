@@ -89,7 +89,7 @@ export default function CartoonReaction() {
       overflow: "hidden" // 确保没有溢出
     }}> 
       {/* 标题部分 */}
-      <div style={{ textAlign: "center", margin: "16px 0", fontSize: "24px" }}>
+      <div style={{ textAlign: "center", margin: "16px 0", fontSize: "36px", fontWeight: "600", fontFamily: "Poppins, sans-serif" }}>
         <span style={{ color: "yellow" }}>来</span>
         <span style={{ color: "purple" }}>听</span>
         <span style={{ color: "red" }}>歌</span>
