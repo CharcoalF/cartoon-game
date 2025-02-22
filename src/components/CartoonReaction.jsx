@@ -1,7 +1,7 @@
-// 导入useState
+// 导入useState和useEffect, useRef
 // useState 是 React 的 状态管理 钩子（hook），可以让组件存储和更新数据。
 // 这里用它来存储 imgSrc，即当前要显示的人物图片路径
-import { useState } from "react"; 
+import { useState, useEffect, useRef } from "react"; 
 
 // 定义 React 组件 & export default 让这个组件可以被其他文件导入并使用。
 export default function CartoonReaction() {
@@ -12,19 +12,58 @@ export default function CartoonReaction() {
   const [imgSrc, setImgSrc] = useState("neutral.jpg");
   const [rejectText, setRejectText] = useState("拒绝");
   const [agreeSize, setAgreeSize] = useState(16); // 以 px 为单位存储按钮大小
+  const buttonRef = useRef(null); // 用于引用拒绝按钮
   
   const handleReject = () => {
     if (rejectText === "拒绝") {
-      setRejectText("再想想");
-      setAgreeSize(18); // 增大字体大小
-    } else if (rejectText === "再想想") {
-      setRejectText("你认真的吗");
-      setAgreeSize(20);
+      setRejectText("要不，再想想？（期待）");
+      setAgreeSize(20); // 增大字体大小
+    } else if (rejectText === "要不，再想想？（期待）") {
+      setRejectText("你你你不爱我了吗？（委屈）");
+      setAgreeSize(30);
+    } else if (rejectText === "你你你不爱我了吗？（委屈）") {
+      setRejectText("不，你是爱我的❤️");
+      setAgreeSize(40);
+    } else if (rejectText === "不，你是爱我的❤️") {
+      setRejectText("既然这样。。。是时候。。。");
+      setAgreeSize(50);
+    } else if (rejectText === "既然这样。。。是时候。。。") {
+      setRejectText("让另一个选项更大一些啦～");
+      setAgreeSize(60);
+    } else if (rejectText === "让另一个选项更大一些啦～") {
+      setRejectText("好吧...😢（才怪）");
+      setAgreeSize(70);
     } else {
-      setRejectText("好吧...😢");
-      setAgreeSize(22);
+      setRejectText("（哭得超大声！！！");
+      setAgreeSize(80);
     }
   };
+
+  const handleMouseMove = (event) => {
+    if (buttonRef.current) {
+      const buttonRect = buttonRef.current.getBoundingClientRect();
+      const buttonCenterX = buttonRect.x + buttonRect.width / 2;
+      const distance = Math.abs(event.clientX - buttonCenterX);
+      const maxDistance = 200; // 设定一个最大距离
+      const normalizedDistance = Math.min(distance / maxDistance, 1);
+
+      if (normalizedDistance < 1) {
+        setImgSrc(normalizedDistance < 0.5 ? "happy.jpg" : "scared.jpg");
+      } else {
+        setImgSrc("neutral.jpg");
+      }
+    }
+  };
+
+  useEffect(() => {
+    // 添加鼠标移动事件监听器
+    window.addEventListener("mousemove", handleMouseMove);
+
+    // 清理函数以移除事件监听器
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+    };
+  }, []);
   //console.log("当前图片:", imgSrc);
 
   return (
@@ -62,8 +101,8 @@ export default function CartoonReaction() {
         </button>
         {/* “拒绝” 按钮
         颜色是红色 (bg-red-500) */}
-        <button className="bg-red-500 text-white px-6 py-3 rounded-lg text-lg"
-        onClick={handleReject}>
+        <button ref={buttonRef} className="bg-red-500 text-white px-6 py-3 rounded-lg text-lg"
+          onClick={handleReject}>
           {rejectText}
         </button>
       </div>
