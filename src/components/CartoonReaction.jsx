@@ -41,35 +41,34 @@ export default function CartoonReaction() {
   };
 
   const handleMouseMove = (event) => {
-    if (buttonRef.current) {
-      const buttonRect = buttonRef.current.getBoundingClientRect();
-      const buttonCenterX = buttonRect.x + buttonRect.width / 2;
-      const buttonCenterY = buttonRect.y + buttonRect.height / 2;
-      const mouseX = event.clientX;
-      const mouseY = event.clientY;
+    const screenWidth = window.innerWidth;
+    const screenHeight = window.innerHeight;
+    const centerX = screenWidth / 2;
+    const centerY = screenHeight / 2;
 
-      const deltaX = mouseX - buttonCenterX;
-      const deltaY = mouseY - buttonCenterY;
+    const deltaX = event.clientX - centerX;
+    const deltaY = event.clientY - centerY;
 
-      if (deltaX < -50 && deltaY < -50) {
-        setImgSrc("./img/look-left-top.jpg");
-      } else if (deltaX < -50 && deltaY > 50) {
-        setImgSrc("./img/look-left-bottom.jpg");
-      } else if (deltaX < -50) {
-        setImgSrc("./img/look-left.jpg");
-      } else if (deltaX > 50 && deltaY < -50) {
-        setImgSrc("./img/look-right-top.jpg");
-      } else if (deltaX > 50 && deltaY > 50) {
-        setImgSrc("./img/look-right-bottom.jpg");
-      } else if (deltaX > 50) {
-        setImgSrc("./img/look-right.jpg");
-      } else if (deltaY < -50) {
-        setImgSrc("./img/look-top.jpg");
-      } else if (deltaY > 50) {
-        setImgSrc("./img/look-bottom.jpg");
-      } else {
-        setImgSrc("./img/neutral.jpg");
-      }
+    // 计算角度
+    const angle = Math.atan2(deltaY, deltaX) * (180 / Math.PI) + 180; // 转换为角度并调整范围
+
+    // 根据角度选择图片
+    const index = Math.floor(angle / 30) % 12; // 每30度一个图片，总共12个图片
+    switch(index) {
+      case 0: setImgSrc("./img/0.jpg"); break;  // 0度
+      case 1: setImgSrc("./img/30.jpg"); break; // 30度
+      case 2: setImgSrc("./img/60.jpg"); break; // 60度
+      case 3: setImgSrc("./img/90.jpg"); break; // 90度
+      case 4: setImgSrc("./img/120.jpg"); break; // 120度
+      case 5: setImgSrc("./img/150.jpg"); break; // 150度
+      case 6: setImgSrc("./img/180.jpg"); break; // 180度
+      case 7: setImgSrc("./img/210.jpg"); break; // 210度
+      case 8: setImgSrc("./img/240.jpg"); break; // 240度
+      case 9: setImgSrc("./img/270.jpg"); break; // 270度
+      case 10: setImgSrc("./img/300.jpg"); break; // 300度
+      case 11: setImgSrc("./img/330.jpg"); break; // 330度
+      // 这里可以添加更多的表情图
+      default: setImgSrc("./img/neutral.jpg"); // 默认中立表情
     }
   };
 
