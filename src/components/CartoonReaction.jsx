@@ -5,30 +5,38 @@ export default function CartoonReaction() {
   const [imgSrc, setImgSrc] = useState("./img/neutral.jpg");
   const [rejectText, setRejectText] = useState("拒绝");
   const [agreeSize, setAgreeSize] = useState(16);
+  const [rejectSize, setRejectSize] = useState(1); // 用于拒绝按钮的缩放
   const buttonRef = useRef(null); 
   
   const handleReject = () => {
     if (rejectText === "拒绝") {
       setRejectText("要不，再想想？（期待）");
       setAgreeSize(20);
+      setRejectSize(0.9); // 减小拒绝按钮
     } else if (rejectText === "要不，再想想？（期待）") {
       setRejectText("你你你不爱我了吗？（委屈）");
       setAgreeSize(30);
+      setRejectSize(0.8);
     } else if (rejectText === "你你你不爱我了吗？（委屈）") {
       setRejectText("不，你是爱我的❤️");
       setAgreeSize(40);
+      setRejectSize(0.7);
     } else if (rejectText === "不，你是爱我的❤️") {
       setRejectText("既然这样。。。是时候。。。");
       setAgreeSize(50);
+      setRejectSize(0.6);
     } else if (rejectText === "既然这样。。。是时候。。。") {
       setRejectText("让另一个选项更大一些啦～");
       setAgreeSize(60);
+      setRejectSize(0.5);
     } else if (rejectText === "让另一个选项更大一些啦～") {
       setRejectText("好吧...😢（才怪）");
       setAgreeSize(70);
+      setRejectSize(0.4);
     } else {
       setRejectText("（哭得超大声！！！");
       setAgreeSize(80);
+      setRejectSize(0.3);
     }
   };
 
@@ -73,19 +81,59 @@ export default function CartoonReaction() {
   }, []);
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100"> 
-      {/* 固定图片的宽高,确保每个图片都相同 */}
-      <img src={imgSrc} alt="character" className="w-32 h-32 mb-6" style={{ width: "256px", height: "256px" }} />
-      <div className="mt-2 flex space-x-4">
+    <div style={{ 
+      position: "relative", 
+      minHeight: "100vh", 
+      margin: 0, 
+      padding: 0, 
+      overflow: "hidden" // 确保没有溢出
+    }}> 
+      {/* 背景图片 */}
+      <div 
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundImage: 'url("./img/background.jpg")', // 确保路径正确
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          opacity: 0.3,
+          filter: "blur(8px)",
+          zIndex: -1,
+        }} 
+      />
+      
+      {/* 固定图片的宽高，确保每个图片都相同 */}
+      <img src={imgSrc} alt="character" className="mb-6" style={{ width: "256px", height: "256px" }} />
+      
+      <div style={{ marginTop: "16px", display: "flex", gap: "16px" }}>
         <button 
-          className="bg-green-500 text-white rounded-lg px-6 py-3 text-lg"
-          style={{ fontSize: `${agreeSize}px`, padding: `${agreeSize / 3}px ${agreeSize / 2}px` }} 
+          style={{
+            backgroundColor: "#48bb78",
+            color: "white",
+            borderRadius: "0.5rem",
+            padding: "0.5rem 1.5rem",
+            fontSize: `${agreeSize}px`,
+          }}
           onClick={() => setImgSrc("./img/happy.png")}
         >
           同意
         </button>
-        <button ref={buttonRef} className="bg-red-500 text-white rounded-lg px-6 py-3 text-lg" 
-          onClick={handleReject}>
+        <button 
+          ref={buttonRef} 
+          style={{
+            backgroundColor: "#f56565",
+            color: "white",
+            borderRadius: "0.5rem",
+            padding: "0.5rem 1.5rem",
+            fontSize: `${rejectSize * 20}px`, // 拒绝按钮字体大小
+            transform: `scale(${rejectSize})`, // 根据大小缩放按钮
+            transition: "transform 0.2s ease-in-out" // 增加缩放动画效果
+          }}
+          onClick={handleReject}
+        >
           {rejectText}
         </button>
       </div>
