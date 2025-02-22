@@ -11,6 +11,7 @@ export default function CartoonReaction() {
   const [comeButtonSize, setComeButtonSize] = useState(16);
   const [guess, setGuess] = useState(""); // 用户猜测
   const [feedbackList, setFeedbackList] = useState([]);
+  const [showGift, setShowGift] = useState(false); // 彩蛋状态
   const buttonRef = useRef(null); 
 
   const handleReject = () => {
@@ -109,6 +110,13 @@ export default function CartoonReaction() {
   const handleGuessSubmit = () => {
     if (guess.trim()) {
       setFeedbackList(prevList => [...prevList, guess]);
+
+      // 检查用户输入的内容是否为彩蛋内容
+      if (guess === "除了快乐禁止入内" || guess === "DO U" || guess === "礼物") {
+        setShowGift(true); // 触发彩蛋
+        setTimeout(() => setShowGift(false), 3000); // 3秒后隐藏礼物
+      }
+
       setGuess(""); // 清空输入框
     }
   };
@@ -238,9 +246,14 @@ export default function CartoonReaction() {
             ))}
           </ul>
         </div>
+
+        {/* 彩蛋效果 */}
+        {showGift && (
+          <div style={{ position: "fixed", top: 0, left: 0, right: 0, bottom: 0, display: "flex", justifyContent: "center", alignItems: "center", zIndex: 2 }}>
+            <span style={{ fontSize: "100px", color: "gold", animation: "fall 2s infinite" }}>🎁</span>
+          </div>
+        )}
       </div>
     </div>
   );
 }
-
-
