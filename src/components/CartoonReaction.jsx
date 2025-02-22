@@ -122,7 +122,7 @@ export default function CartoonReaction() {
           }}
           onClick={() => setImgSrc("./img/happy.png")}
         >
-          来啦！
+          来啦
         </button>
         <button 
           ref={buttonRef} 
