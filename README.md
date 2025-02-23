@@ -1,12 +1,14 @@
 # Cartoon Reaction Component
 
-## 简介
+## Introduction
 
-`CartoonReaction` 是一个 React 组件，展示了一个卡通人物的反应，用户可以通过鼠标移动来影响人物的表情和视线方向。该组件结合了鼠标事件和状态管理，增强了用户互动体验。
+`CartoonReaction` is a fun and interactive React component where a cartoon character reacts to your mouse movement. The character's gaze follows the cursor, and the buttons provide a playful way to interact with it.
 
-## 环境
+## Setup
 
-```
+Make sure you have [Node.js](https://nodejs.org/) installed, then run the following commands to create the project and install dependencies:
+
+```sh
 npx create-vite cartoon-game --template react
 cd cartoon-game
 npm install
@@ -15,49 +17,34 @@ npm install @shadcn/ui
 npm run dev
 ```
 
-## 功能
+## Demo
 
-- 根据鼠标位置动态变化卡通人物的视线方向。
-- 提供“同意”和“拒绝”按钮，用户可以与卡通人物进行互动。
-- 按钮的状态和文本会随着用户的点击而变化，增加趣味性。
+Here’s a preview of how the `CartoonReaction` component works:
 
-## 技术栈
+<img src="./img/demo.gif" width="300px" height="auto" alt="Cartoon Reaction Demo">
 
-- React
-- Tailwind CSS
-- JavaScript
+## Features
 
-## 组件结构
+- **Mouse tracking**: The cartoon character's gaze follows your cursor movement.
+- **Interactive buttons**:
+  - The "Agree" button grows in size, making it more appealing.
+  - The "Reject" button shrinks and moves randomly, making it harder to click.
+- **User input interaction**: A text input field lets users enter specific words to trigger Easter eggs.
 
-`CartoonReaction` 组件的主要结构如下：
+## Tech Stack
 
-```javascript
-export default function CartoonReaction() {
-  // 组件状态和逻辑
-  return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-      <img src={imgSrc} alt="character" className="w-32 h-32 mb-6" />
-      <div className="mt-2 flex space-x-4">
-        <button className="bg-green-500 text-white rounded-lg px-6 py-3 text-lg">
-          同意
-        </button>
-        <button
-          ref={buttonRef}
-          className="bg-red-500 text-white rounded-lg px-6 py-3 text-lg"
-        >
-          {rejectText}
-        </button>
-      </div>
-    </div>
-  );
-}
-```
+- **React** - Component-based UI
+- **Tailwind CSS** - Fast styling
+- **JavaScript** - Handles interactivity
 
-## 自定义
+## Customization
 
-- 可以通过替换 `./img/` 文件夹中的图片文件，来更改卡通人物的表情。
-- 调整按钮样式和文本，使其符合你的设计需求。
+You can modify this component to fit your needs:
 
-## 贡献
+- **Change the images**: Replace the files in the `./img/` folder to customize the character's expressions.
+- **Adjust the interactions**: Modify button behavior, making it easier or harder to click.
+- **Style changes**: Use Tailwind CSS to tweak colors, animations, or layouts to match your design.
 
-欢迎任何形式的贡献！请在提交请求之前确保进行充分的测试。
+## Contributions
+
+Contributions are welcome! If you have ideas or bug fixes, feel free to submit a pull request. Please ensure your changes are well-tested before submitting.
