@@ -162,14 +162,14 @@ export default function CartoonReaction() {
           type="text" 
           value={guess} 
           onChange={handleGuessChange} 
-          placeholder="输入你的答案..." 
+          placeholder="进入会场的指南是..." 
           style={{ padding: "10px", borderRadius: "5px", border: "1px solid #ccc", width: "300px" }} 
         />
         <button 
           onClick={handleGuessSubmit} 
           style={{ marginLeft: "10px", backgroundColor: "#48bb78", color: "white", borderRadius: "5px", padding: "10px 20px" }}
         >
-          提交
+          堡儿要提交
         </button>
       </div>
 
