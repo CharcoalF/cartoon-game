@@ -6,14 +6,13 @@
 
 ## Setup
 
-Make sure you have [Node.js](https://nodejs.org/) installed, then run the following commands to create the project and install dependencies:
+Make sure you have [Node.js](https://nodejs.org/) installed, then run the following commands:
 
 ```sh
-npx create-vite cartoon-game --template react
+git clone https://github.com/CharcoalF/cartoon-game.git
 cd cartoon-game
 npm install
-npm install framer-motion
-npm install @shadcn/ui
+npm install framer-motion @shadcn/ui
 npm run dev
 ```
 
